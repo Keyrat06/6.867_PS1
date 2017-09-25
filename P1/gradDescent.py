@@ -18,7 +18,7 @@ def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None):
     return theta
 
 
-mu, S, A, b = lp.getData()
+
 
 def d_quadraticBowl(x):
     return (np.matmul(x, A)-b)
@@ -32,10 +32,17 @@ def gaussian(x, mu, S, n):
     exponent = -0.5 * (x-mu).T * np.linalg.inv(S) * (x-mu)
     return coeff * np.exp(exponent)
 
-if __name__ == "__main__":
+def gradientApprox(f, x, d):
+    return (f(x+d)-f(x))/d
+
+def test_problem_1(mu, S, A, b):
     print(mu, S, A, b)
     n = len(mu)
     #a = gradDescent(n, d_gaussian, 100, 0.00001, 20)
     #print(a)
     b = gradDescent(n, d_quadraticBowl, 0.1, 0.00001, 20)
     print(b)
+
+mu, S, A, b = lp.getData()
+
+test_problem_1(mu, S, A, b)
