@@ -1,4 +1,5 @@
 import loadParametersP1 as lp
+import loadFittingDataP1 as lfd
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -53,16 +54,55 @@ n = len(mu)
 
 
 ## part 2
-d = 0.000000000001
-g_differences = []
-q_differences = []
-for x in np.random.random([100, n]):
-    x * 100
-    g_differences.append(np.linalg.norm(gradientApprox(l_gaussian(mu, S, n), x, d) - d_gaussian(x)))
-    q_differences.append(np.linalg.norm(gradientApprox(quadraticBowl, x, d) - d_quadraticBowl(x)))
-plt.hist(g_differences)
-plt.title("g_diff")
-plt.show('hold')
-plt.hist(q_differences)
-plt.title("q_diff")
-plt.show('hold')
+# d = 0.000000000001
+# g_differences = []
+# q_differences = []
+# for x in np.random.random([100, n]):
+#     x * 100
+#     g_differences.append(np.linalg.norm(gradientApprox(l_gaussian(mu, S, n), x, d) - d_gaussian(x)))
+#     q_differences.append(np.linalg.norm(gradientApprox(quadraticBowl, x, d) - d_quadraticBowl(x)))
+# plt.hist(g_differences)
+# plt.title("g_diff")
+# plt.show('hold')
+# plt.hist(q_differences)
+# plt.title("q_diff")
+# plt.show('hold')
+
+
+## part 3 a batch
+#Implementing basic gradient descent
+def batchGradDescent(y, x, batch_size, step_size, threshold, num_iterations, theta = None):
+    if theta is None:
+        theta = np.zeros(len(x[0]))
+
+    for i in range(num_iterations):
+
+        for batch in range(0, len(x), batch_size):
+            summed_gradient = np.zeros(len(x[0]))
+
+            for j in range(batch, min([batch_size+batch, len(x)])):
+                # print((theta.T * x[j] - y[j]).shape)
+                # print(summed_gradient.shape)
+                summed_gradient += theta * x[j] - y[j]
+            print(theta*x[j] - y[j])
+            print(summed_gradient)
+            #print(summed_gradient)
+            #print(((x[batch:min([batch_size+batch, len(x)+1])] * theta.T) - y[batch:min([batch_size+batch, len(x)+1])].reshape(-1,1)).sum(axis=0))
+            theta -= step_size * summed_gradient
+
+
+        # if np.linalg.norm(y-theta.reshape(-1, 1)*x.T) <= threshold:
+        #     return theta
+    return theta
+
+
+
+#x, y = lfd.getData()
+#print (len(y))
+
+x = np.array([ [1,2], [2,2] ]) #, [3,1], [1, 3]])
+print(x)
+y = x[:,0]*3 + x[:,1]*8
+print(y)
+
+print(batchGradDescent(y, x, 20, 0.001, 0.1, 1000))
