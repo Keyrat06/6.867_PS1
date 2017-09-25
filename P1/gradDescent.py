@@ -9,9 +9,9 @@ def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None):
         theta = np.zeros(n)
 
     for i in range(num_iterations):
-
+        print(theta)
         new_theta = theta - step_size * dg(theta)
-
+        print(new_theta)
         if np.linalg.norm(new_theta - theta) < threshold:
             return theta
 
@@ -24,15 +24,19 @@ def d_quadraticBowl(x):
     b = 0
     pass
 
-
 mu, S, A, b = lp.getData()
 
 def d_gaussian(x):
     n = len(mu)
-    return -1 * gaussian(x, mu, S, n) * np.linalg.inv(S) * (x-mu)
+    return -1 * np.matmul(np.matmul(gaussian(x, mu, S, n),np.linalg.inv(S)), (x-mu))
 
 def gaussian(x, mu, S, n):
-    coeff = -(10**4)/np.sqrt((2*np.pi)**n * np.linalg.norm(S))
+    coeff = -(1)/np.sqrt((2*np.pi)**n * np.linalg.norm(S))
     exponent = -0.5 * (x-mu).T * np.linalg.inv(S) * (x-mu)
     return coeff * np.exp(exponent)
 
+if __name__ == "__main__":
+    print(mu, S, A, b)
+    n = len(mu)
+    a = gradDescent(n, d_gaussian, 100, 0.00001, 20)
+    print(a)
