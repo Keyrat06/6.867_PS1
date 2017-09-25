@@ -22,6 +22,8 @@ mu, S, A, b = lp.getData()
 
 def d_quadraticBowl(x):
     return (np.matmul(x, A)-b)
+def quadraticBowl(x):
+    return .5*np.matmul(x,np.matmul(A,x.T))-np.matmul(x.T,b)
 
 def d_gaussian(x):
     n = len(mu)
