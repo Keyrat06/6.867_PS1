@@ -18,9 +18,7 @@ def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None):
     return theta
 
 def d_quadraticBowl(x):
-    A = 0
-    b = 0
-    pass
+    return np.matmult(A,x)-b
 
 
 mu, S, A, b = lp.getData()
