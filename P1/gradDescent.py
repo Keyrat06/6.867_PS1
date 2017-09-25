@@ -1,8 +1,6 @@
 import loadParametersP1 as lp
 import numpy as np
 
-
-
 #Implementing basic gradient descent
 def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None):
     if theta is None:
@@ -20,9 +18,7 @@ def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None):
     return theta
 
 def d_quadraticBowl(x):
-    A = 0
-    b = 0
-    pass
+    return np.matmult(A,x)-b
 
 mu, S, A, b = lp.getData()
 
