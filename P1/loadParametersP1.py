@@ -15,4 +15,4 @@ def getData():
     quadBowlb = data[5,:]
 
     return (gaussMean,gaussCov,quadBowlA,quadBowlb) 
-
+print(getData()[0])
