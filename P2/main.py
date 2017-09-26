@@ -50,7 +50,22 @@ f = lambda x: SSE_poly(y, x, theta)
 print(gradientApprox(f, x, 0.00001))
 
 
+#Batch gradient descent for problem 2.3
+def batchGradDescent(y, x, step_size, num_iterations, theta = None):
+    if theta is None:
+        theta = np.zeros([len(x[0])])
+    errors = []
+    for i in range(num_iterations):
+        sse_error = d_SSE_poly_expanded(y, x, theta)
+        error = (x * theta.T - y.reshape(-1, 1))
+        a = (error * x).sum(axis=0).T
 
+        theta -= step_size * a
+        errors.append((error**2).sum())
+
+    plt.plot(errors)
+    plt.show("hold")
+    return theta
 
 
 
