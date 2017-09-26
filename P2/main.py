@@ -31,15 +31,14 @@ def gradientApprox(f, x, d):
     return (f(x+d)-f(x))/d
 
 
-
 #with these params SSE_poly should return 0
-y = np.array([3, 5, 7, 9, 11])
-x = np.array([1, 2, 3, 4, 5])
+y = np.array([3, 5, 7])
+x = np.array([1, 2, 3])
 theta = np.array([1, 2])
 print (SSE_poly(y, x, theta))
 
-y = np.array([4, 6, 8, 10, 12])
-x = np.array([1, 2, 3, 4, 5])
+y = np.array([4, 6, 8])
+x = np.array([1, 2, 3])
 theta = np.array([1, 2])
 print(d_SSE_poly(y, x, theta))
 
