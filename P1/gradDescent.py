@@ -97,6 +97,32 @@ def batchGradDescent(y, x, batch_size, step_size, threshold, num_iterations, the
 
 
 
+## part 3 a batch
+#Implementing stochastic gradient descent
+def stochGradDescent(y, x, batch_size, step_size, threshold, num_iterations, theta = None):
+    if theta is None:
+        theta = np.zeros(len(x[0]))
+
+    for i in range(num_iterations):
+
+        for batch in range(0, len(x), batch_size):
+            summed_gradient = np.zeros(len(x[0]))
+
+            for j in range(batch, min([batch_size+batch, len(x)])):
+                # print((theta.T * x[j] - y[j]).shape)
+                # print(summed_gradient.shape)
+                summed_gradient += theta * x[j] - y[j]
+            print(theta*x[j] - y[j])
+            print(summed_gradient)
+            #print(summed_gradient)
+            #print(((x[batch:min([batch_size+batch, len(x)+1])] * theta.T) - y[batch:min([batch_size+batch, len(x)+1])].reshape(-1,1)).sum(axis=0))
+            theta -= step_size * summed_gradient
+
+
+        # if np.linalg.norm(y-theta.reshape(-1, 1)*x.T) <= threshold:
+        #     return theta
+    return theta
+
 #x, y = lfd.getData()
 #print (len(y))
 
