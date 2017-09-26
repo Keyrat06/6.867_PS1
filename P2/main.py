@@ -41,6 +41,44 @@ def gradientApprox(f, x, d):
 
 
 #with these params SSE_poly should return 0
+y = np.array([3, 5, 7, 9, 11])
+x = np.array([1, 2, 3, 4, 5])
+theta = np.array([1, 2])
+print (SSE_poly(y, x, theta))
+
+y = np.array([4, 6, 8, 10, 12])
+x = np.array([1, 2, 3, 4, 5])
+theta = np.array([1, 2])
+print(d_SSE_poly(y, x, theta))
+
+f = lambda x: SSE_poly(y, x, theta)
+print(gradientApprox(f, x, 0.00001))
+
+
+#Batch gradient descent for problem 2.3
+def batchGradDescent(y, x, m, step_size, num_iterations, theta = None):
+    x = expand(x,m)
+    if theta is None:
+        theta = np.zeros([len(x[0])])
+    errors = []
+    for i in range(num_iterations):
+
+        d_sse_error = d_SSE_poly_expanded(y, x, theta)
+
+        error = SSE_poly_expanded(y, x, theta)
+        theta -= step_size * d_sse_error
+        errors.append(error)
+
+    plt.plot(errors)
+    plt.show("hold")
+    return theta
+
+
+
+theta = batchGradDescent(Y,X,5,.05,10000)
+
+
+
 # y = np.array([3, 5, 7])
 # x = np.array([1, 2, 3])
 # theta = np.array([1, 2])
@@ -62,12 +100,12 @@ def maxLikelihoodVector(x,y,m):
     return w
 
 # maxVec = maxLikelihoodVector(X,Y,3)
-# X_test = np.linspace(0,1,100)
-# sol = np.matmul(expand(X_test,3),maxVec)
-# plt.plot(X_test,sol)
-#
-# plt.plot(X,Y,'o')
-#
-# plt.xlabel('x')
-# plt.ylabel('y')
-# plt.show()
+X_test = np.linspace(0,1,100)
+sol = np.matmul(expand(X_test,5),theta)
+plt.plot(X_test,sol)
+
+plt.plot(X,Y,'o')
+
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
