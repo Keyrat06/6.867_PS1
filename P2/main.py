@@ -27,15 +27,15 @@ def d_SSE_poly(y, x, theta):
     return d_SSE_poly_expanded(y, X, theta)
 
 def d_SSE_poly_expanded(y, X, theta):
-    error = (y - np.matmul(X, theta))
-    return error.reshape(-1, 1) * X
+    error = np.matmul(X, theta) - y.reshape(1, -1)
+    return 2*(error.T * X).sum(axis=0)
 
 def gradientApprox(f, x, d):
     return (f(x+d)-f(x))/d
 
 
-
 #with these params SSE_poly should return 0
+<<<<<<< HEAD
 y = np.array([3, 5, 7, 9, 11])
 x = np.array([1, 2, 3, 4, 5])
 theta = np.array([1, 2])
@@ -72,6 +72,20 @@ def batchGradDescent(y, x, step_size, num_iterations, theta = None):
 
 
 
+=======
+# y = np.array([3, 5, 7])
+# x = np.array([1, 2, 3])
+# theta = np.array([1, 2])
+# print (SSE_poly(y, x, theta))
+#
+# y = np.array([4, 6, 8])
+# x = np.array([1, 2, 3])
+# theta = np.array([1, 2])
+# print(d_SSE_poly(y, x, theta))
+#
+# f = lambda theta: SSE_poly(y, x, theta)
+# print(gradientApprox(f, theta, 0.001))
+>>>>>>> 22c794ef1e26d4e2a14751f215e4147d4c1102c9
 
 def maxLikelihoodVector(x,y,m):
     x_panded = expand(x,m)
@@ -80,13 +94,13 @@ def maxLikelihoodVector(x,y,m):
     w = np.linalg.inv(x_panded.T*x_panded)*x_panded.T*y.T
     return w
 
-maxVec = maxLikelihoodVector(X,Y,3)
-X_test = np.linspace(0,1,100)
-sol = np.matmul(expand(X_test,3),maxVec)
-plt.plot(X_test,sol)
-
-plt.plot(X,Y,'o')
-
-plt.xlabel('x')
-plt.ylabel('y')
-plt.show()
+# maxVec = maxLikelihoodVector(X,Y,3)
+# X_test = np.linspace(0,1,100)
+# sol = np.matmul(expand(X_test,3),maxVec)
+# plt.plot(X_test,sol)
+#
+# plt.plot(X,Y,'o')
+#
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.show()
