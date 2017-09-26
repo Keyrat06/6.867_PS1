@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="786e0838-868e-4a8b-ad48-a614210dbea3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/P1/gradDescent.py" afterPath="$PROJECT_DIR$/P1/gradDescent.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/P2/main.py" afterPath="$PROJECT_DIR$/P2/main.py" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,7 +44,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gradDescent.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="gradDescent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/P1/gradDescent.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="373">
@@ -68,12 +68,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/P2/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="225">
+              <caret line="15" column="27" lean-forward="false" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+                <marker date="1506392732000" expanded="true" signature="260:326" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -139,8 +142,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/P1/loadParametersP1.py" />
-        <option value="$PROJECT_DIR$/P2/main.py" />
         <option value="$PROJECT_DIR$/P1/gradDescent.py" />
+        <option value="$PROJECT_DIR$/P2/main.py" />
       </list>
     </option>
   </component>
@@ -541,20 +544,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/P2/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/P1/gradDescent.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="373">
           <caret line="141" column="0" lean-forward="true" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/P2/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="27" lean-forward="false" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+            <marker date="1506392732000" expanded="true" signature="260:326" ph="..." />
           </folding>
         </state>
       </provider>
