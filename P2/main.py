@@ -13,6 +13,12 @@ def expand(x, m):
         expanded[:,i] = x**i
     return expanded
 
+def expand_theta(x, m):
+    x = np.array(x)
+    expanded = np.zeros([len(x), m+1])
+    for i in range(m+1):
+        expanded[:, i] = np.cos(i*np.pi*x)
+    return expanded
 
 def SSE_poly(y, x, theta):
     X = expand(x, len(theta)-1)
