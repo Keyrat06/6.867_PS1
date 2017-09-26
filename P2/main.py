@@ -62,7 +62,40 @@ def batchGradDescent(y, x, m, step_size, num_iterations, theta = None):
         theta = np.zeros([len(x[0])])
     errors = []
     for i in range(num_iterations):
+        error = SSE_poly_expanded(y, x, theta)
+        errors.append(error)
 
+        d_sse_error = d_SSE_poly_expanded(y, x, theta)
+        theta -= step_size * d_sse_error
+
+
+    plt.plot(errors)
+    plt.show("hold")
+    return theta
+
+#Batch gradient descent for problem 2.3
+def stochGradDescent(y, x, m, t_o, k, num_iterations, theta = None):
+    x = expand(x,m)
+    if theta is None:
+        theta = np.zeros(len(x[0]))
+    errors = []
+    for i in range(num_iterations):
+        error = SSE_poly_expanded(y, x, theta)
+        errors.append(error)
+        step_size = (t_o+i)**(-k)
+
+        for point in range(len(x)):
+            theta -= step_size * d_SSE_poly_expanded(y[point], x[point], theta)
+
+    plt.plot(errors)
+    plt.show("hold")
+    return theta
+
+    x = expand(x,m)
+    if theta is None:
+        theta = np.zeros([len(x[0])])
+    errors = []
+    for i in range(num_iterations):
         d_sse_error = d_SSE_poly_expanded(y, x, theta)
 
         error = SSE_poly_expanded(y, x, theta)

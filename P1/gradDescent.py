@@ -98,21 +98,9 @@ def stochGradDescent(y, x, t_o, k,num_iterations, theta = None):
         errors.append((error**2).sum())
         step_size = (t_o+i)**(-k)
         for point in range(len(x)):
-            gradient = np.zeros(len(x[0]))
-
-            # for j in range(batch, min([batch_size+batch, len(x)])):
-            #     # print((theta.T * x[j] - y[j]).shape)
-            #     # print(summed_gradient.shape)
-            gradient += x[point]*(theta * x[point] - y[point])
-            # print(theta*x[j] - y[j])
-            # print(summed_gradient)
-            #print(summed_gradient)
-            #print(((x[batch:min([batch_size+batch, len(x)+1])] * theta.T) - y[batch:min([batch_size+batch, len(x)+1])].reshape(-1,1)).sum(axis=0))
+            gradient = x[point]*(theta * x[point] - y[point])
             theta -= step_size * gradient
 
-
-        # if np.linalg.norm(y-theta.reshape(-1, 1)*x.T) <= threshold:
-        #     return theta
     plt.plot(errors)
     plt.show("hold")
     return theta
@@ -138,7 +126,7 @@ x = x/100.0
 # a)
 # A = batchGradDescent(y, x, 100, 0.001, 0.1, 1000)
 # b)
-# A = stochGradDescent(y, x, 1, .75, 100)
+A = stochGradDescent(y, x, 1, .75, 100)
 
 y = np.matrix(y)
 x = np.matrix(x)
