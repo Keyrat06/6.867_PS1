@@ -71,7 +71,7 @@ n = len(mu)
 
 ## part 3 a batch
 #Implementing basic gradient descent
-def batchGradDescent(y, x, batch_size, step_size, threshold, num_iterations, theta = None):
+def batchGradDescent(y, x, step_size, num_iterations, theta = None):
     if theta is None:
         theta = np.zeros([len(x[0])])
     errors = []
@@ -87,7 +87,6 @@ def batchGradDescent(y, x, batch_size, step_size, threshold, num_iterations, the
     return theta
 
 
-
 x, y = lfd.getData()
 y = y/100.0
 x = x/100.0
@@ -97,6 +96,7 @@ x = x/100.0
 # print(x)
 # y = x * np.array([3, 8])
 # print(y)
+
 
 A = batchGradDescent(y, x, 100, 0.001, 0.1, 1000)
 y = np.matrix(y)
