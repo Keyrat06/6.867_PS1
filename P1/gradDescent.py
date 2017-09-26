@@ -88,31 +88,35 @@ def batchGradDescent(y, x, batch_size, step_size, threshold, num_iterations, the
 
 
 
-<<<<<<< HEAD
+
 ## part 3 a batch
 #Implementing stochastic gradient descent
-def stochGradDescent(y, x, batch_size, step_size, threshold, num_iterations, theta = None):
+def stochGradDescent(y, x, t_o, k,num_iterations, theta = None):
     if theta is None:
         theta = np.zeros(len(x[0]))
-
+    errors = []
     for i in range(num_iterations):
+        error = (x * theta.T - y.reshape(-1, 1))
+        errors.append((error**2).sum())
+        step_size = (t_o+i)**(-k)
+        for point in range(len(x)):
+            gradient = np.zeros(len(x[0]))
 
-        for batch in range(0, len(x), batch_size):
-            summed_gradient = np.zeros(len(x[0]))
-
-            for j in range(batch, min([batch_size+batch, len(x)])):
-                # print((theta.T * x[j] - y[j]).shape)
-                # print(summed_gradient.shape)
-                summed_gradient += theta * x[j] - y[j]
-            print(theta*x[j] - y[j])
-            print(summed_gradient)
+            # for j in range(batch, min([batch_size+batch, len(x)])):
+            #     # print((theta.T * x[j] - y[j]).shape)
+            #     # print(summed_gradient.shape)
+            gradient += x[point]*(theta * x[point] - y[point])
+            # print(theta*x[j] - y[j])
+            # print(summed_gradient)
             #print(summed_gradient)
             #print(((x[batch:min([batch_size+batch, len(x)+1])] * theta.T) - y[batch:min([batch_size+batch, len(x)+1])].reshape(-1,1)).sum(axis=0))
-            theta -= step_size * summed_gradient
+            theta -= step_size * gradient
 
 
         # if np.linalg.norm(y-theta.reshape(-1, 1)*x.T) <= threshold:
         #     return theta
+    plt.plot(errors)
+    plt.show("hold")
     return theta
 
 #x, y = lfd.getData()
@@ -122,7 +126,7 @@ x = np.array([ [1,2], [2,2] ]) #, [3,1], [1, 3]])
 print(x)
 y = x[:,0]*3 + x[:,1]*8
 print(y)
-=======
+
 x, y = lfd.getData()
 y = y/100.0
 x = x/100.0
@@ -132,9 +136,8 @@ x = x/100.0
 # print(x)
 # y = x * np.array([3, 8])
 # print(y)
->>>>>>> 64174a14bf2a67f785d1186055cfb31ae1fe3dfc
 
-A = batchGradDescent(y, x, 100, 0.001, 0.1, 1000)
+A = stochGradDescent(y, x, 1, .75, 100)
 y = np.matrix(y)
 x = np.matrix(x)
 A2 = np.linalg.inv(x.T*x)*x.T*y.T
