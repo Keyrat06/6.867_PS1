@@ -29,6 +29,8 @@ def d_gaussian(x):
 
 def gaussian(x, mu, S, n):
     coeff = -(1)/np.sqrt((2*np.pi)**n * np.linalg.norm(S))
+    print((x-mu).T.shape)
+    print(np.linalg.inv(S).shape)
     exponent = -0.5 * (x-mu).T * np.linalg.inv(S) * (x-mu)
     return coeff * np.exp(exponent)
 
@@ -43,48 +45,49 @@ mu, S, A, b = lp.getData()
 n = len(mu)
 
 # part 1
-print(mu)
-print(S)
-print(A)
-print(b)
-n = len(mu)
-_, sums_a_0 = gradDescent(n, d_gaussian, 20, 0, 40)
-_, sums_b_0 = gradDescent(n, d_quadraticBowl, 0.01, 0, 40)
+# print(mu)
+# print(S)
+# print(A)
+# print(b)
+# n = len(mu)
+# _, sums_a_0 = gradDescent(n, d_gaussian, 20, 0, 40)
+# _, sums_b_0 = gradDescent(n, d_quadraticBowl, 0.01, 0, 40)
 
-_, sums_a_1 = gradDescent(n, d_gaussian, 100, 0, 40)
-_, sums_b_1 = gradDescent(n, d_quadraticBowl, 0.05, 0, 40)
+# _, sums_a_1 = gradDescent(n, d_gaussian, 100, 0, 40)
+# _, sums_b_1 = gradDescent(n, d_quadraticBowl, 0.05, 0, 40)
 
-_, sums_a_2 = gradDescent(n, d_gaussian, 300, 0, 40)
-_, sums_b_2 = gradDescent(n, d_quadraticBowl, 0.12, 0, 40)
+# _, sums_a_2 = gradDescent(n, d_gaussian, 300, 0, 40)
+# _, sums_b_2 = gradDescent(n, d_quadraticBowl, 0.12, 0, 40)
 
-plt.plot(sums_a_0, label="gaussian_lr=20")
-plt.plot(sums_b_0, label="quadratic Bowl_lr=0.01")
-plt.plot(sums_a_1, label="gaussian_lr=100")
-plt.plot(sums_b_1, label="quadratic Bowl_lr=0.05")
-plt.plot(sums_a_2, label="gaussian_lr=300")
-plt.plot(sums_b_2, label="quadratic Bowl_lr=0.1")
+# plt.plot(sums_a_0, label="gaussian_lr=20")
+# plt.plot(sums_b_0, label="quadratic Bowl_lr=0.01")
+# plt.plot(sums_a_1, label="gaussian_lr=100")
+# plt.plot(sums_b_1, label="quadratic Bowl_lr=0.05")
+# plt.plot(sums_a_2, label="gaussian_lr=300")
+# plt.plot(sums_b_2, label="quadratic Bowl_lr=0.1")
 
 
-plt.ylabel("Theta Value")
-plt.xlabel("Iteration number")
-plt.title("Theta Convergence")
-plt.legend()
-plt.show("hold")
+# plt.ylabel("Theta Value")
+# plt.xlabel("Iteration number")
+# plt.title("Theta Convergence")
+# plt.legend()
+# plt.show("hold")
 
 ## part 2
-# d = 0.000000000001
-# g_differences = []
-# q_differences = []
-# for x in np.random.random([100, n]):
-#     x * 100
-#     g_differences.append(np.linalg.norm(gradientApprox(l_gaussian(mu, S, n), x, d) - d_gaussian(x)))
-#     q_differences.append(np.linalg.norm(gradientApprox(quadraticBowl, x, d) - d_quadraticBowl(x)))
-# plt.hist(g_differences)
-# plt.title("g_diff")
-# plt.show('hold')
-# plt.hist(q_differences)
-# plt.title("q_diff")
-# plt.show('hold')
+d = 0.000000000001
+g_differences = []
+q_differences = []
+print (mu.shape)
+for x in np.random.random([100, n]):
+    x * 100
+    g_differences.append(np.linalg.norm(gradientApprox(l_gaussian(mu, S, n), x, d) - d_gaussian(x)))
+    q_differences.append(np.linalg.norm(gradientApprox(quadraticBowl, x, d) - d_quadraticBowl(x)))
+plt.hist(g_differences)
+plt.title("g_diff")
+plt.show('hold')
+plt.hist(q_differences)
+plt.title("q_diff")
+plt.show('hold')
 
 
 ## part 3 a batch
