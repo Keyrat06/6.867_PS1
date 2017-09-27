@@ -94,27 +94,30 @@ def batchGradDescent(y, x, step_size, num_iterations, theta = None):
         theta = np.zeros([len(x[0])])
     evaluations = []
     thetas = []
+    errors = []
     for i in range(num_iterations):
         evaluations.append(i*len(y))
         thetas.append(theta.sum())
         error = np.matmul(x, theta) - y
+        errors.append(abs(error).sum())
         a = np.matmul(error.T, x)
         theta -= step_size * a
 
-    # plt.plot(errors)
-    # plt.show("hold")
-    return theta, (evaluations, thetas)
+    return theta, (evaluations, thetas), errors
 
 
 ## part 3 b stochastic
 #Implementing stochastic gradient descent
-def stochGradDescent(y, x, t_o, k, num_iterations, theta = None):
+def stochGradDescent(y, x, t_o, k, num_iterations, theta=None):
     if theta is None:
         theta = np.zeros(len(x[0]))
     thetas = []
     evals = 0
     evaluations = []
+    errors = []
     for i in range(num_iterations):
+        error = np.matmul(x, theta) - y
+        errors.append(abs(error).sum())
         p = np.random.permutation(len(y))
         y = y[p]
         x = x[p]
@@ -128,24 +131,32 @@ def stochGradDescent(y, x, t_o, k, num_iterations, theta = None):
 
     # plt.plot(errors)
     # plt.show("hold")
-    return theta, (evaluations, thetas)
+    return theta, (evaluations, thetas), errors
 
-# x, y = lfd.getData()
-# #print (len(y))
-# y/1000.0
-# x/1000.0
+x, y = lfd.getData()
+y/1000.0
+x/1000.0
 #
-# X_test = np.linspace(-1, 1, 100)
-# # a)
-# _, e_batch_1 = batchGradDescent(y, x, 0.00001, 20)
-# # b)
-# _, e_stoch_1 = stochGradDescent(y, x, 100000, 1, 20)
-# _, e_stoch_2 = stochGradDescent(y, x, 100000, 1, 20)
-# _, e_stoch_3 = stochGradDescent(y, x, 100000, 1, 20)
-# plt.plot(e_batch_1[0], e_batch_1[1], label="Batch gradient decent")
-# plt.plot(e_stoch_1[0], e_stoch_1[1], label="Stochastic gradient decent 1")
-# plt.plot(e_stoch_2[0], e_stoch_2[1], label="Stochastic gradient decent 2")
-# plt.plot(e_stoch_3[0], e_stoch_3[1], label="Stochastic gradient decent 3")
+_, t_batch_1, e_batch_1 = batchGradDescent(y, x, 0.00001, 20)
+_, t_stoch_1, e_stoch_1 = stochGradDescent(y, x, 100000, 1, 20)
+
+# convergence plot
+
+plt.plot(e_batch_1, label="Batch gradient decent")
+plt.plot(e_stoch_1, label="Stochastic gradient decent")
+plt.title("Batch vs Stochastic gradient decent")
+plt.xlabel("Number of Iterations")
+plt.ylabel("error over dataset")
+plt.legend()
+plt.show("hold")
+
+
+#
+# # theta plots
+# plt.plot(t_batch_1[0], t_batch_1[1], label="Batch gradient decent")
+# plt.plot(t_stoch_1[0], t_stoch_1[1], label="Stochastic gradient decent 1")
+# plt.plot(t_stoch_2[0], t_stoch_2[1], label="Stochastic gradient decent 2")
+# plt.plot(t_stoch_3[0], t_stoch_3[1], label="Stochastic gradient decent 3")
 # plt.title("Batch vs Stochastic gradient decent")
 # plt.xlabel("Number of Evaluations")
 # plt.ylabel("Sum of Theta vector")
