@@ -39,81 +39,6 @@ def d_SSE_poly_expanded(y, X, theta):
 def gradientApprox(f, x, d):
     return (f(x+d)-f(x))/d
 
-
-#with these params SSE_poly should return 0
-# y = np.array([3, 5, 7, 9, 11])
-# x = np.array([1, 2, 3, 4, 5])
-# theta = np.array([1, 2])
-# print (SSE_poly(y, x, theta))
-#
-# y = np.array([4, 6, 8, 10, 12])
-# x = np.array([1, 2, 3, 4, 5])
-# theta = np.array([1, 2])
-# print(d_SSE_poly(y, x, theta))
-#
-# f = lambda x: SSE_poly(y, x, theta)
-# print(gradientApprox(f, x, 0.00001))
-
-
-#Batch gradient descent for problem 2.3
-def batchGradDescent(y, x, m, step_size, num_iterations, theta = None, expander = expand):
-    x = expander(x,m)
-    if theta is None:
-        theta = np.zeros([len(x[0])])
-    errors = []
-    for i in range(num_iterations):
-        error = SSE_poly_expanded(y, x, theta)
-        errors.append(error)
-
-        d_sse_error = d_SSE_poly_expanded(y, x, theta)
-        theta -= step_size * d_sse_error
-
-
-    plt.plot(errors)
-    plt.show("hold")
-    return theta
-
-#Batch gradient descent for problem 2.3
-def stochGradDescent(y, x, m, t_o, k, num_iterations, theta = None, expander = expand):
-    x = expander(x,m)
-    if theta is None:
-        theta = np.zeros(len(x[0]))
-    errors = []
-    for i in range(num_iterations):
-        error = SSE_poly_expanded(y, x, theta)
-        errors.append(error)
-        step_size = (t_o+i)**(-k)
-
-        for point in range(len(x)):
-            theta -= step_size * d_SSE_poly_expanded(y[point], x[point], theta)
-
-    plt.plot(errors)
-    plt.show("hold")
-    return theta
-
-# m = 5
-
-# theta = batchGradDescent(Y, X, m, .05, 10000)
-
-# theta2 = stochGradDescent(Y, X, m, 100, 0.5, 1000)
-
-# theta3 = batchGradDescent(Y, X, m, .001, 10000, expander=expand_theta)
-
-# theta4 = stochGradDescent(Y, X, m, 20, 0.75, 10000, expander=expand_theta)
-
-# y = np.array([3, 5, 7])
-# x = np.array([1, 2, 3])
-# theta = np.array([1, 2])
-# print (SSE_poly(y, x, theta))
-#
-# y = np.array([4, 6, 8])
-# x = np.array([1, 2, 3])
-# theta = np.array([1, 2])
-# print(d_SSE_poly(y, x, theta))
-#
-# f = lambda theta: SSE_poly(y, x, theta)
-# print(gradientApprox(f, theta, 0.001))
-
 def maxLikelihoodVector(x,y,m):
     x_panded = expand(x,m)
     x_panded = np.matrix(x_panded)
@@ -121,18 +46,108 @@ def maxLikelihoodVector(x,y,m):
     w = np.linalg.inv(x_panded.T*x_panded)*x_panded.T*y.T
     return w
 
+#Batch gradient descent for problem 2.3
+def batchGradDescent(y, x, m, step_size, num_iterations, theta = None, expander = expand):
+    x = expander(x,m)
+    if theta is None:
+        theta = np.zeros([len(x[0])])
+    evaluations = []
+    thetas = []
+    for i in range(num_iterations):
+        evaluations.append(i*len(y))
+        thetas.append(theta.sum())
 
-# maxVec = maxLikelihoodVector(X,Y,3)
-def plot(theta, expander=expand):
-    X_test = np.linspace(0, 1, 100)
-    sol = np.matmul(expander(X_test, len(theta)-1), theta)
-    plt.plot(X_test, sol)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.show()
+        d_sse_error = d_SSE_poly_expanded(y, x, theta)
+        theta -= step_size * d_sse_error
+
+    return theta, (evaluations, thetas)
+
+#Batch gradient descent for problem 2.3
+def stochGradDescent(y, x, m, t_o, k, num_iterations, theta = None, expander = expand):
+    x = expander(x, m)
+    if theta is None:
+        theta = np.zeros(len(x[0]))
+    thetas = []
+    evals = 0
+    evaluations = []
+    for i in range(num_iterations):
+        p = np.random.permutation(len(y))
+        y = y[p]
+        x = x[p]
+        step_size = (t_o+i)**(-k)
+        for point in range(len(x)):
+            thetas.append(theta.sum())
+            evaluations.append(evals)
+            evals += 1
+            theta -= step_size * d_SSE_poly_expanded(y[point], x[point], theta)
+    return theta, (evaluations, thetas)
+
+# # part 1
+# X, Y = getData(True)
+# X_plot = np.linspace(0, 1, 200)
 #
-# plt.plot(X,Y,'o')
+# theta_0 = maxLikelihoodVector(X, Y, 0)
+# sol_0 = np.matmul(expand(X_plot, len(theta_0)-1), theta_0)
 #
+# theta_1 = maxLikelihoodVector(X, Y, 1)
+# sol_1 = np.matmul(expand(X_plot, len(theta_1)-1), theta_1)
+#
+# theta_3 = maxLikelihoodVector(X, Y, 3)
+# sol_3 = np.matmul(expand(X_plot, len(theta_3)-1), theta_3)
+#
+# theta_10 = maxLikelihoodVector(X, Y, 10)
+# sol_10 = np.matmul(expand(X_plot, len(theta_10)-1), theta_10)
+#
+#
+# plt.plot(X_plot, sol_0, color="blue", label="m=0")
+# plt.plot(X_plot, sol_1, color="green", label="m=1")
+# plt.plot(X_plot, sol_3, color="red", label="m=3")
+# plt.plot(X_plot, sol_10, color="purple", label="m=10")
+# plt.legend()
+# plt.title("Fitting data with polynomials of different degrees")
 # plt.xlabel('x')
 # plt.ylabel('y')
-# plt.show()
+# plt.show("hold")
+
+##
+#part 2 has no graphs
+
+## part 3
+m = 5
+X, Y = getData(False)
+X_plot = np.linspace(0, 1, 200)
+
+theta_batch_poly, e_batch_poly = batchGradDescent(Y, X, m, .05, 300)
+sol_batch_poly = np.matmul(expand(X_plot, len(theta_batch_poly)-1), theta_batch_poly)
+
+theta_stoch_poly, e_stoch_poly = stochGradDescent(Y, X, m, 100, 0.5, 300)
+sol_stoch_poly = np.matmul(expand(X_plot, len(theta_stoch_poly)-1), theta_stoch_poly)
+
+theta_batch_cos, e_batch_cos = batchGradDescent(Y, X, m, .001, 300, expander=expand_theta)
+sol_batch_cos = np.matmul(expand_theta(X_plot, len(theta_batch_cos)-1), theta_batch_cos)
+
+theta_stoch_cos, e_stoch_cos = stochGradDescent(Y, X, m, 20, 0.75, 300, expander=expand_theta)
+sol_stoch_cos = np.matmul(expand_theta(X_plot, len(theta_stoch_cos)-1), theta_stoch_cos)
+# plot values
+
+plt.plot(e_batch_poly[0], e_batch_poly[1], label="batch poly")
+plt.plot(e_stoch_poly[0], e_stoch_poly[1], label="stoch poly")
+plt.plot(e_batch_cos[0], e_batch_cos[1], label="batch cos")
+plt.plot(e_stoch_cos[0], e_stoch_cos[1], label="stoch cos")
+plt.title("batch vs stochastic gradient decent")
+plt.xlabel("number of evaluations")
+plt.ylabel("sum of theta vector")
+plt.legend()
+plt.show("hold")
+
+# plot fittings #remember to turn plot to true in getData
+# plt.plot(X_plot, sol_batch_poly, color="blue", label="batch poly")
+# plt.plot(X_plot, sol_stoch_poly, color="green", label="stoch poly")
+# plt.plot(X_plot, sol_batch_cos, color="red", label="batch cos")
+# plt.plot(X_plot, sol_stoch_cos, color="purple", label="stoch cos")
+# plt.legend()
+# plt.title("Fitting data with polynomials of different degrees")
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.show("hold")
+
