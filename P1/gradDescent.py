@@ -142,13 +142,13 @@ _, t_stoch_1, e_stoch_1 = stochGradDescent(y, x, 100000, 1, 20)
 
 # convergence plot
 
-plt.plot(e_batch_1, label="Batch gradient decent")
-plt.plot(e_stoch_1, label="Stochastic gradient decent")
-plt.title("Batch vs Stochastic gradient decent")
-plt.xlabel("Number of Iterations")
-plt.ylabel("error over dataset")
-plt.legend()
-plt.show("hold")
+# plt.plot(e_batch_1, label="Batch gradient decent")
+# plt.plot(e_stoch_1, label="Stochastic gradient decent")
+# plt.title("Batch vs Stochastic gradient decent")
+# plt.xlabel("Number of Iterations")
+# plt.ylabel("error over dataset")
+# plt.legend()
+# plt.show("hold")
 
 
 #
