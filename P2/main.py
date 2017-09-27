@@ -122,9 +122,13 @@ def maxLikelihoodVector(x,y,m):
     return w
 
 # maxVec = maxLikelihoodVector(X,Y,3)
-# X_test = np.linspace(0,1,100)
-# sol = np.matmul(expand_theta(X_test, m), theta3)
-# plt.plot(X_test,sol)
+def plot(theta, expander=expand):
+    X_test = np.linspace(0, 1, 100)
+    sol = np.matmul(expander(X_test, len(theta)-1), theta)
+    plt.plot(X_test, sol)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.show()
 #
 # plt.plot(X,Y,'o')
 #
