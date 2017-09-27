@@ -4,20 +4,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Implementing basic gradient descent
-def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None):
+def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None, goal = None):
     if theta is None:
         theta = np.zeros(n)
-
+    errors = []
     for i in range(num_iterations):
-        print(theta)
         new_theta = theta - step_size * dg(theta)
-        print(new_theta)
         if np.linalg.norm(new_theta - theta) < threshold:
-            return theta
-
+            return theta, errors
         theta = new_theta
-
-    return theta
+        if goal is not None:
+            error = (goal-theta).sum()
+            errors.append(error)
+    return theta, errors
 
 def d_quadraticBowl(x):
     return (np.matmul(x, A)-b)
@@ -45,13 +44,22 @@ mu, S, A, b = lp.getData()
 n = len(mu)
 
 ## part 1
-# print(mu, S, A, b)
-# n = len(mu)
-# a = gradDescent(n, d_gaussian, 100, 0.00001, 20)
-# print(a)
-# b = gradDescent(n, d_quadraticBowl, 0.1, 0.00001, 20)
+# print(mu)
+# print(S)
+# print(A)
 # print(b)
-
+# n = len(mu)
+# a, errors_a = gradDescent(n, d_gaussian, 100, 0.01, 20, goal=mu)
+# b, errors_b = gradDescent(n, d_quadraticBowl, 0.05, 0.01, 20, goal=np.matmul(np.linalg.inv(A), b))
+#
+#
+# plt.plot(errors_a, label="gaussian")
+# plt.plot(errors_b, label="quadratic Bowl")
+# plt.ylabel("sum of (goal - current)")
+# plt.xlabel("Iteration number")
+# plt.title("Error Per Iteration")
+# plt.legend()
+# plt.show("hold")
 
 ## part 2
 # d = 0.000000000001
@@ -108,14 +116,14 @@ def stochGradDescent(y, x, t_o, k,num_iterations, theta = None):
 #x, y = lfd.getData()
 #print (len(y))
 
-x = np.array([ [1,2], [2,2] ]) #, [3,1], [1, 3]])
-print(x)
-y = x[:,0]*3 + x[:,1]*8
-print(y)
-
-x, y = lfd.getData()
-y = y/100.0
-x = x/100.0
+# x = np.array([ [1,2], [2,2] ]) #, [3,1], [1, 3]])
+# print(x)
+# y = x[:,0]*3 + x[:,1]*8
+# print(y)
+#
+# x, y = lfd.getData()
+# y = y/100.0
+# x = x/100.0
 # print (len(y))
 #
 # x = np.array([[1, 2], [2,2], [3,1], [1, 3], [5, 6]])
@@ -126,10 +134,10 @@ x = x/100.0
 # a)
 # A = batchGradDescent(y, x, 100, 0.001, 0.1, 1000)
 # b)
-A = stochGradDescent(y, x, 1, .75, 100)
-
-y = np.matrix(y)
-x = np.matrix(x)
-A2 = np.linalg.inv(x.T*x)*x.T*y.T
-print(A, A2)
+# A = stochGradDescent(y, x, 1, .75, 100)
+#
+# y = np.matrix(y)
+# x = np.matrix(x)
+# A2 = np.linalg.inv(x.T*x)*x.T*y.T
+# print(A, A2)
 # print(A * x.T)
