@@ -121,6 +121,7 @@ def maxLikelihoodVector(x,y,m):
     w = np.linalg.inv(x_panded.T*x_panded)*x_panded.T*y.T
     return w
 
+
 # maxVec = maxLikelihoodVector(X,Y,3)
 def plot(theta, expander=expand):
     X_test = np.linspace(0, 1, 100)
