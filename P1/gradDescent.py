@@ -4,19 +4,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Implementing basic gradient descent
-def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None, goal = None):
+def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None):
     if theta is None:
         theta = np.zeros(n)
-    errors = []
+    thetas = []
     for i in range(num_iterations):
-        if goal is not None:
-            error = (goal-theta).sum()
-            errors.append(error)
+        theta_sum = (theta).sum()
+        thetas.append(theta_sum)
         new_theta = theta - step_size * dg(theta)
         if np.linalg.norm(new_theta - theta) < threshold:
-            return theta, errors
+            return theta, thetas
         theta = new_theta
-    return theta, errors
+    return theta, thetas
 
 def d_quadraticBowl(x):
     return (np.matmul(x, A)-b)
@@ -49,19 +48,26 @@ print(S)
 print(A)
 print(b)
 n = len(mu)
-_, errors_a_1 = gradDescent(n, d_gaussian, 100, 0.001, 10, goal=mu)
-_, errors_b_1 = gradDescent(n, d_quadraticBowl, 0.05, 0.001, 10, goal=np.matmul(np.linalg.inv(A), b))
+_, sums_a_0 = gradDescent(n, d_gaussian, 20, 0, 40)
+_, sums_b_0 = gradDescent(n, d_quadraticBowl, 0.01, 0, 40)
 
-_, errors_a_2 = gradDescent(n, d_gaussian, 300, 0.001, 10, goal=mu)
-_, errors_b_2 = gradDescent(n, d_quadraticBowl, 0.10, 0.001, 10, goal=np.matmul(np.linalg.inv(A), b))
+_, sums_a_1 = gradDescent(n, d_gaussian, 100, 0, 40)
+_, sums_b_1 = gradDescent(n, d_quadraticBowl, 0.05, 0, 40)
 
-plt.plot(errors_a_1, label="gaussian_1")
-plt.plot(errors_b_1, label="quadratic Bowl_1")
-plt.plot(errors_a_2, label="gaussian_2")
-plt.plot(errors_b_2, label="quadratic Bowl_2")
-plt.ylabel("sum of (goal - current)")
+_, sums_a_2 = gradDescent(n, d_gaussian, 300, 0, 40)
+_, sums_b_2 = gradDescent(n, d_quadraticBowl, 0.12, 0, 40)
+
+plt.plot(sums_a_0, label="gaussian_lr=20")
+plt.plot(sums_b_0, label="quadratic Bowl_lr=0.01")
+plt.plot(sums_a_1, label="gaussian_lr=100")
+plt.plot(sums_b_1, label="quadratic Bowl_lr=0.05")
+plt.plot(sums_a_2, label="gaussian_lr=300")
+plt.plot(sums_b_2, label="quadratic Bowl_lr=0.1")
+
+
+plt.ylabel("Theta Value")
 plt.xlabel("Iteration number")
-plt.title("Error Per Iteration")
+plt.title("Theta Convergence")
 plt.legend()
 plt.show("hold")
 
