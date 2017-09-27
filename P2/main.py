@@ -1,16 +1,16 @@
-from loadFittingDataP2 import getData
+from P2.loadFittingDataP2 import getData
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as pl
 
 
-X, Y = getData(False)
+# X, Y = getData(False)
 
 def expand(x, m):
     x = np.array(x)
     expanded = np.zeros([len(x), m+1])
     for i in range(m+1):
-        expanded[:,i] = x**i
+        expanded[:, i] = (x**i).reshape(-1)
     return expanded
 
 def expand_theta(x, m):
@@ -91,13 +91,13 @@ def stochGradDescent(y, x, m, t_o, k, num_iterations, theta = None, expander = e
     plt.show("hold")
     return theta
 
-m = 5
+# m = 5
 
 # theta = batchGradDescent(Y, X, m, .05, 10000)
 
 # theta2 = stochGradDescent(Y, X, m, 100, 0.5, 1000)
 
-theta3 = batchGradDescent(Y, X, m, .001, 10000, expander=expand_theta)
+# theta3 = batchGradDescent(Y, X, m, .001, 10000, expander=expand_theta)
 
 # theta4 = stochGradDescent(Y, X, m, 20, 0.75, 10000, expander=expand_theta)
 
@@ -123,12 +123,12 @@ def maxLikelihoodVector(x,y,m):
 
 
 # maxVec = maxLikelihoodVector(X,Y,3)
-X_test = np.linspace(0,1,100)
-sol = np.matmul(expand_theta(X_test, m), theta3)
-plt.plot(X_test,sol)
-
-plt.plot(X,Y,'o')
-
-plt.xlabel('x')
-plt.ylabel('y')
-plt.show()
+# X_test = np.linspace(0,1,100)
+# sol = np.matmul(expand_theta(X_test, m), theta3)
+# plt.plot(X_test,sol)
+#
+# plt.plot(X,Y,'o')
+#
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.show()
