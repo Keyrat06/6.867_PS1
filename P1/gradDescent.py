@@ -9,13 +9,13 @@ def gradDescent(n, dg, step_size, threshold, num_iterations, theta = None, goal 
         theta = np.zeros(n)
     errors = []
     for i in range(num_iterations):
+        if goal is not None:
+            error = (goal-theta).sum()
+            errors.append(error)
         new_theta = theta - step_size * dg(theta)
         if np.linalg.norm(new_theta - theta) < threshold:
             return theta, errors
         theta = new_theta
-        if goal is not None:
-            error = (goal-theta).sum()
-            errors.append(error)
     return theta, errors
 
 def d_quadraticBowl(x):
@@ -43,23 +43,27 @@ def gradientApprox(f, x, d):
 mu, S, A, b = lp.getData()
 n = len(mu)
 
-## part 1
-# print(mu)
-# print(S)
-# print(A)
-# print(b)
-# n = len(mu)
-# a, errors_a = gradDescent(n, d_gaussian, 100, 0.01, 20, goal=mu)
-# b, errors_b = gradDescent(n, d_quadraticBowl, 0.05, 0.01, 20, goal=np.matmul(np.linalg.inv(A), b))
-#
-#
-# plt.plot(errors_a, label="gaussian")
-# plt.plot(errors_b, label="quadratic Bowl")
-# plt.ylabel("sum of (goal - current)")
-# plt.xlabel("Iteration number")
-# plt.title("Error Per Iteration")
-# plt.legend()
-# plt.show("hold")
+# part 1
+print(mu)
+print(S)
+print(A)
+print(b)
+n = len(mu)
+_, errors_a_1 = gradDescent(n, d_gaussian, 100, 0.001, 10, goal=mu)
+_, errors_b_1 = gradDescent(n, d_quadraticBowl, 0.05, 0.001, 10, goal=np.matmul(np.linalg.inv(A), b))
+
+_, errors_a_2 = gradDescent(n, d_gaussian, 300, 0.001, 10, goal=mu)
+_, errors_b_2 = gradDescent(n, d_quadraticBowl, 0.10, 0.001, 10, goal=np.matmul(np.linalg.inv(A), b))
+
+plt.plot(errors_a_1, label="gaussian_1")
+plt.plot(errors_b_1, label="quadratic Bowl_1")
+plt.plot(errors_a_2, label="gaussian_2")
+plt.plot(errors_b_2, label="quadratic Bowl_2")
+plt.ylabel("sum of (goal - current)")
+plt.xlabel("Iteration number")
+plt.title("Error Per Iteration")
+plt.legend()
+plt.show("hold")
 
 ## part 2
 # d = 0.000000000001
