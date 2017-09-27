@@ -130,27 +130,27 @@ def stochGradDescent(y, x, t_o, k, num_iterations, theta = None):
     # plt.show("hold")
     return theta, (evaluations, thetas)
 
-x, y = lfd.getData()
-#print (len(y))
-y/1000.0
-x/1000.0
-
-X_test = np.linspace(-1, 1, 100)
-# a)
-_, e_batch_1 = batchGradDescent(y, x, 0.00001, 20)
-# b)
-_, e_stoch_1 = stochGradDescent(y, x, 100000, 1, 20)
-_, e_stoch_2 = stochGradDescent(y, x, 100000, 1, 20)
-_, e_stoch_3 = stochGradDescent(y, x, 100000, 1, 20)
-plt.plot(e_batch_1[0], e_batch_1[1], label="Batch gradient decent")
-plt.plot(e_stoch_1[0], e_stoch_1[1], label="Stochastic gradient decent 1")
-plt.plot(e_stoch_2[0], e_stoch_2[1], label="Stochastic gradient decent 2")
-plt.plot(e_stoch_3[0], e_stoch_3[1], label="Stochastic gradient decent 3")
-plt.title("Batch vs Stochastic gradient decent")
-plt.xlabel("Number of Evaluations")
-plt.ylabel("Sum of Theta vector")
-plt.legend()
-plt.show("hold")
+# x, y = lfd.getData()
+# #print (len(y))
+# y/1000.0
+# x/1000.0
+#
+# X_test = np.linspace(-1, 1, 100)
+# # a)
+# _, e_batch_1 = batchGradDescent(y, x, 0.00001, 20)
+# # b)
+# _, e_stoch_1 = stochGradDescent(y, x, 100000, 1, 20)
+# _, e_stoch_2 = stochGradDescent(y, x, 100000, 1, 20)
+# _, e_stoch_3 = stochGradDescent(y, x, 100000, 1, 20)
+# plt.plot(e_batch_1[0], e_batch_1[1], label="Batch gradient decent")
+# plt.plot(e_stoch_1[0], e_stoch_1[1], label="Stochastic gradient decent 1")
+# plt.plot(e_stoch_2[0], e_stoch_2[1], label="Stochastic gradient decent 2")
+# plt.plot(e_stoch_3[0], e_stoch_3[1], label="Stochastic gradient decent 3")
+# plt.title("Batch vs Stochastic gradient decent")
+# plt.xlabel("Number of Evaluations")
+# plt.ylabel("Sum of Theta vector")
+# plt.legend()
+# plt.show("hold")
 
 
 ## eval
