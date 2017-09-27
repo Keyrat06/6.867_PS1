@@ -113,32 +113,32 @@ def stochGradDescent(y, x, m, t_o, k, num_iterations, theta = None, expander = e
 #part 2 has no graphs
 
 ## part 3
-m = 5
-X, Y = getData(False)
-X_plot = np.linspace(0, 1, 200)
-
-theta_batch_poly, e_batch_poly = batchGradDescent(Y, X, m, .05, 300)
-sol_batch_poly = np.matmul(expand(X_plot, len(theta_batch_poly)-1), theta_batch_poly)
-
-theta_stoch_poly, e_stoch_poly = stochGradDescent(Y, X, m, 100, 0.5, 300)
-sol_stoch_poly = np.matmul(expand(X_plot, len(theta_stoch_poly)-1), theta_stoch_poly)
-
-theta_batch_cos, e_batch_cos = batchGradDescent(Y, X, m, .001, 300, expander=expand_theta)
-sol_batch_cos = np.matmul(expand_theta(X_plot, len(theta_batch_cos)-1), theta_batch_cos)
-
-theta_stoch_cos, e_stoch_cos = stochGradDescent(Y, X, m, 20, 0.75, 300, expander=expand_theta)
-sol_stoch_cos = np.matmul(expand_theta(X_plot, len(theta_stoch_cos)-1), theta_stoch_cos)
-# plot values
-
-plt.plot(e_batch_poly[0], e_batch_poly[1], label="batch poly")
-plt.plot(e_stoch_poly[0], e_stoch_poly[1], label="stoch poly")
-plt.plot(e_batch_cos[0], e_batch_cos[1], label="batch cos")
-plt.plot(e_stoch_cos[0], e_stoch_cos[1], label="stoch cos")
-plt.title("batch vs stochastic gradient decent")
-plt.xlabel("number of evaluations")
-plt.ylabel("sum of theta vector")
-plt.legend()
-plt.show("hold")
+# m = 5
+# X, Y = getData(False)
+# X_plot = np.linspace(0, 1, 200)
+#
+# theta_batch_poly, e_batch_poly = batchGradDescent(Y, X, m, .05, 300)
+# sol_batch_poly = np.matmul(expand(X_plot, len(theta_batch_poly)-1), theta_batch_poly)
+#
+# theta_stoch_poly, e_stoch_poly = stochGradDescent(Y, X, m, 100, 0.5, 300)
+# sol_stoch_poly = np.matmul(expand(X_plot, len(theta_stoch_poly)-1), theta_stoch_poly)
+#
+# theta_batch_cos, e_batch_cos = batchGradDescent(Y, X, m, .001, 300, expander=expand_theta)
+# sol_batch_cos = np.matmul(expand_theta(X_plot, len(theta_batch_cos)-1), theta_batch_cos)
+#
+# theta_stoch_cos, e_stoch_cos = stochGradDescent(Y, X, m, 20, 0.75, 300, expander=expand_theta)
+# sol_stoch_cos = np.matmul(expand_theta(X_plot, len(theta_stoch_cos)-1), theta_stoch_cos)
+# # plot values
+#
+# plt.plot(e_batch_poly[0], e_batch_poly[1], label="batch poly")
+# plt.plot(e_stoch_poly[0], e_stoch_poly[1], label="stoch poly")
+# plt.plot(e_batch_cos[0], e_batch_cos[1], label="batch cos")
+# plt.plot(e_stoch_cos[0], e_stoch_cos[1], label="stoch cos")
+# plt.title("batch vs stochastic gradient decent")
+# plt.xlabel("number of evaluations")
+# plt.ylabel("sum of theta vector")
+# plt.legend()
+# plt.show("hold")
 
 # plot fittings #remember to turn plot to true in getData
 # plt.plot(X_plot, sol_batch_poly, color="blue", label="batch poly")
