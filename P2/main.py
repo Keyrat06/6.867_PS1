@@ -17,7 +17,7 @@ def expand_theta(x, m):
     x = np.array(x)
     expanded = np.zeros([len(x), m+1])
     for i in range(m+1):
-        expanded[:, i] = np.cos(i*np.pi*x)
+        expanded[:, i] = (np.cos(i*np.pi*x)).flatten()
     return expanded
 
 def SSE_poly(y, x, theta):
@@ -140,15 +140,15 @@ def stochGradDescent(y, x, m, t_o, k, num_iterations, theta = None, expander = e
 
 
 ## part 4
-m = 8
-X, Y = getData(False)
-X_plot = np.linspace(0, 1, 200)
-
-theta_batch, e_batch = batchGradDescent(Y, X, m, .05, 300, expander=expand_theta)
-theta_stoch, e_stoch = stochGradDescent(Y, X, m, 100, 0.5, 300, expander=expand_theta)
-
-sol_batch = np.matmul(expand(X_plot, m), theta_batch)
-sol_stoch = np.matmul(expand(X_plot, m), theta_stoch)
+# m = 8
+# X, Y = getData(False)
+# X_plot = np.linspace(0, 1, 200)
+#
+# theta_batch, e_batch = batchGradDescent(Y, X, m, .05, 300, expander=expand_theta)
+# theta_stoch, e_stoch = stochGradDescent(Y, X, m, 100, 0.5, 300, expander=expand_theta)
+#
+# sol_batch = np.matmul(expand(X_plot, m), theta_batch)
+# sol_stoch = np.matmul(expand(X_plot, m), theta_stoch)
 
 
 
@@ -158,34 +158,34 @@ sol_stoch = np.matmul(expand(X_plot, m), theta_stoch)
 # plt.plot(X_plot, sol_batch, color="red", label="Batch cosine")
 # plt.plot(X_plot, sol_stoch, color="green", label="Stochastic polynomial")
 
-print(theta_batch)
-print(theta_stoch)
-real_values = [0,1,1,0,0,0,0,0,0]
-
-
-# Four polar axes
-plt.subplot(1, 3, 1)
-plt.title("Batch weights")
-plt.bar(np.arange(len(theta_batch)), theta_batch)
-plt.xlabel("Theta Term")
-plt.ylabel("weight")
-
-plt.subplot(1, 3, 2)
-plt.title("Stoch weights")
-plt.bar(np.arange(len(theta_stoch)), theta_stoch)
-plt.xlabel("Theta Term")
-plt.ylabel("weight")
-plt.subplot(1, 3, 3)
-
-plt.title("Sampled weights")
-plt.bar(np.arange(len(real_values)), real_values)
-plt.xlabel("Theta Term")
-plt.ylabel("weight")
-
-
-plt.subplots_adjust(hspace=0.3)
-
-plt.show("hold")
+# print(theta_batch)
+# print(theta_stoch)
+# real_values = [0,1,1,0,0,0,0,0,0]
+#
+#
+# # BAR GRAPHS
+# plt.subplot(1, 3, 1)
+# plt.title("Batch weights")
+# plt.bar(np.arange(len(theta_batch)), theta_batch)
+# plt.xlabel("Theta Term")
+# plt.ylabel("weight")
+#
+# plt.subplot(1, 3, 2)
+# plt.title("Stoch weights")
+# plt.bar(np.arange(len(theta_stoch)), theta_stoch)
+# plt.xlabel("Theta Term")
+# plt.ylabel("weight")
+# plt.subplot(1, 3, 3)
+#
+# plt.title("Sampled weights")
+# plt.bar(np.arange(len(real_values)), real_values)
+# plt.xlabel("Theta Term")
+# plt.ylabel("weight")
+#
+#
+# plt.subplots_adjust(hspace=0.3)
+#
+# plt.show("hold")
 
 
 # #
