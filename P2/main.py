@@ -140,23 +140,48 @@ def stochGradDescent(y, x, m, t_o, k, num_iterations, theta = None, expander = e
 
 
 ## part 4
-m = 3
-X, Y = getData(True)
+m = 8
+X, Y = getData(False)
 X_plot = np.linspace(0, 1, 200)
+
+theta_batch, e_batch = batchGradDescent(Y, X, m, .05, 300, expander=expand_theta)
+theta_stoch, e_stoch = stochGradDescent(Y, X, m, 100, 0.5, 300, expander=expand_theta)
+
+sol_batch = np.matmul(expand(X_plot, m), theta_batch)
+sol_stoch = np.matmul(expand(X_plot, m), theta_stoch)
+
+
+
+# plt.plot(e_batch[0], e_batch[1], label="Batch polynomial")
+# plt.plot(e_stoch[0], e_stoch[1], label="Stochastic polynomial")
+
+# plt.plot(X_plot, sol_batch, color="red", label="Batch cosine")
+# plt.plot(X_plot, sol_stoch, color="green", label="Stochastic polynomial")
+
+print(theta_batch)
+print(theta_stoch)
+real_values = []
+plt.bar(np.arange(len(theta_batch)), theta_batch)
+plt.bar(np.arange(len(theta_stoch)), theta_stoch)
+plt.show()
+
+
+
+
+# #
+# theta_batch_poly, e_batch_poly = batchGradDescent(Y, X, m, .05, 300)
+# sol_batch_poly = np.matmul(expand(X_plot, len(theta_batch_poly)-1), theta_batch_poly)
 #
-theta_batch_poly, e_batch_poly = batchGradDescent(Y, X, m, .05, 300)
-sol_batch_poly = np.matmul(expand(X_plot, len(theta_batch_poly)-1), theta_batch_poly)
-
-theta_stoch_poly, e_stoch_poly = stochGradDescent(Y, X, m, 100, 0.5, 300)
-sol_stoch_poly = np.matmul(expand(X_plot, len(theta_stoch_poly)-1), theta_stoch_poly)
-
-theta_batch_cos, e_batch_cos = batchGradDescent(Y, X, m, .001, 300, expander=expand_theta)
-sol_batch_cos = np.matmul(expand_theta(X_plot, len(theta_batch_cos)-1), theta_batch_cos)
-
-theta_stoch_cos, e_stoch_cos = stochGradDescent(Y, X, m, 20, 0.75, 300, expander=expand_theta)
-sol_stoch_cos = np.matmul(expand_theta(X_plot, len(theta_stoch_cos)-1), theta_stoch_cos)
-# plot values
-
+# theta_stoch_poly, e_stoch_poly = stochGradDescent(Y, X, m, 100, 0.5, 300)
+# sol_stoch_poly = np.matmul(expand(X_plot, len(theta_stoch_poly)-1), theta_stoch_poly)
+#
+# theta_batch_cos, e_batch_cos = batchGradDescent(Y, X, m, .001, 300, expander=expand_theta)
+# sol_batch_cos = np.matmul(expand_theta(X_plot, len(theta_batch_cos)-1), theta_batch_cos)
+#
+# theta_stoch_cos, e_stoch_cos = stochGradDescent(Y, X, m, 20, 0.75, 300, expander=expand_theta)
+# sol_stoch_cos = np.matmul(expand_theta(X_plot, len(theta_stoch_cos)-1), theta_stoch_cos)
+# # plot values
+#
 # plt.plot(e_batch_poly[0], e_batch_poly[1], label="Batch polynomial")
 # plt.plot(e_stoch_poly[0], e_stoch_poly[1], label="Stochastic polynomial")
 # plt.plot(e_batch_cos[0], e_batch_cos[1], label="Batch Cosine")
@@ -168,13 +193,13 @@ sol_stoch_cos = np.matmul(expand_theta(X_plot, len(theta_stoch_cos)-1), theta_st
 # plt.show("hold")
 # #
 # plot fittings #remember to turn plot to true in getData
-plt.plot(X_plot, sol_batch_poly, color="blue", label="Batch polynomial")
-plt.plot(X_plot, sol_stoch_poly, color="green", label="Stochastic polynomial")
-plt.plot(X_plot, sol_batch_cos, color="red", label="Batch cosine")
-plt.plot(X_plot, sol_stoch_cos, color="purple", label="Stochastic cosine")
-plt.legend()
-plt.title("Fitting data with polynomial or cosines M = 3")
-plt.xlabel('x')
-plt.ylabel('y')
-plt.show("hold")
+# plt.plot(X_plot, sol_batch_poly, color="blue", label="Batch polynomial")
+# plt.plot(X_plot, sol_stoch_poly, color="green", label="Stochastic polynomial")
+# plt.plot(X_plot, sol_batch_cos, color="red", label="Batch cosine")
+# plt.plot(X_plot, sol_stoch_cos, color="purple", label="Stochastic cosine")
+# plt.legend()
+# plt.title("Fitting data with polynomial or cosines M = 3")
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.show("hold")
 
