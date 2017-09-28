@@ -160,12 +160,32 @@ sol_stoch = np.matmul(expand(X_plot, m), theta_stoch)
 
 print(theta_batch)
 print(theta_stoch)
-real_values = []
+real_values = [0,1,1,0,0,0,0,0,0]
+
+
+# Four polar axes
+plt.subplot(1, 3, 1)
+plt.title("Batch weights")
 plt.bar(np.arange(len(theta_batch)), theta_batch)
+plt.xlabel("Theta Term")
+plt.ylabel("weight")
+
+plt.subplot(1, 3, 2)
+plt.title("Stoch weights")
 plt.bar(np.arange(len(theta_stoch)), theta_stoch)
-plt.show()
+plt.xlabel("Theta Term")
+plt.ylabel("weight")
+plt.subplot(1, 3, 3)
+
+plt.title("Sampled weights")
+plt.bar(np.arange(len(real_values)), real_values)
+plt.xlabel("Theta Term")
+plt.ylabel("weight")
 
 
+plt.subplots_adjust(hspace=0.3)
+
+plt.show("hold")
 
 
 # #
